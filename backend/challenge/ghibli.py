@@ -49,7 +49,9 @@ class GhibliRepository:
         :return: list of data.
         """
         if self._cache:
-            return self._cache.get(key, [])
+            redis_data = self._cache.get(key)
+            if redis_data:
+                return json.loads(redis_data)
         return []
 
     def _to_cache(self, key: str, value: Dict) -> None:

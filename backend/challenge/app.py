@@ -18,7 +18,7 @@ def create_app(**kwargs):
         port = app.config.get('REDIS_PORT', 6379)
         app.redis = redis.Redis(host=host, port=port)
         expire_sec = app.config.get('REDIS_EXPIRE', 60)
-        app.repository = GhibliRepository(cache=app.redis, expire=expire_sec)
+        app.repository = GhibliRepository(cache=app.redis, expire_sec=expire_sec)
 
     @app.listener('after_server_stop')
     def finish(app, loop):
