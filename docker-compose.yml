@@ -4,7 +4,7 @@ services:
     image: redis
     container_name: cache
     expose:
-      - 6379
+      - "${CHALLENGE_REDIS_PORT}"
   backend:
     restart: always
     env_file:
@@ -13,5 +13,5 @@ services:
       context: ./backend
       dockerfile: ./Dockerfile
     ports:
-      - "8000:8000"
+      - "${CHALLENGE_BACKEND_PORT}:${CHALLENGE_BACKEND_PORT}"
     command: bash -c "python ./run.py"
