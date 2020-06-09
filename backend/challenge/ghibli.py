@@ -61,7 +61,8 @@ class GhibliRepository:
         :param key: cache key.
         :param value: data to store.
         """
-        self._cache.setex(key, self._cache_expire, json.dumps(value))
+        if self._cache:
+            self._cache.setex(key, self._cache_expire, json.dumps(value))
 
     @staticmethod
     def _people_by_film(people: List) -> Dict:
