@@ -1,0 +1,18 @@
+import pytest
+from backend.challenge.app import create_app
+
+
+@pytest.yield_fixture
+def app():
+    app = create_app(cache=False)
+    yield app
+
+
+@pytest.fixture
+def test_cli(loop, app, sanic_client):
+    return loop.run_until_complete(sanic_client(app))
+
+
+async def test_ok(test_cli):
+    resp = await test_cli.get('/movies')
+    assert resp.status == 200

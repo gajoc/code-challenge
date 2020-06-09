@@ -1,6 +1,8 @@
 import json
 from collections import defaultdict
 from typing import Dict, List
+from sanic.log import logger
+
 
 from backend.challenge.constants import GHIBLI_FILMS_URL, GHIBLI_PEOPLE_URL
 
@@ -25,6 +27,7 @@ class GhibliRepository:
             people_by_film = self._people_by_film(people)
             movies = self._match(films, people_by_film)
 
+            logger.info("hit ghibli API for movies data...")
             self._to_cache("movies", movies)
         return movies
 
@@ -51,6 +54,7 @@ class GhibliRepository:
         if self._cache:
             redis_data = self._cache.get(key)
             if redis_data:
+                logger.info("hit cache for movies data...")
                 return json.loads(redis_data)
         return []
 
