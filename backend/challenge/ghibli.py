@@ -2,6 +2,8 @@ import json
 from collections import defaultdict
 from typing import Dict, List
 
+from backend.challenge.constants import GHIBLI_FILMS_URL, GHIBLI_PEOPLE_URL
+
 
 class GhibliRepository:
 
@@ -18,10 +20,8 @@ class GhibliRepository:
         """
         movies = self._from_cache("movies")
         if not movies:
-            films_url = 'https://ghibliapi.herokuapp.com/films'
-            films = await self._from_ghibli(films_url, session)
-            people_url = 'https://ghibliapi.herokuapp.com/people'
-            people = await self._from_ghibli(people_url, session)
+            films = await self._from_ghibli(GHIBLI_FILMS_URL, session)
+            people = await self._from_ghibli(GHIBLI_PEOPLE_URL, session)
             people_by_film = self._people_by_film(people)
             movies = self._match(films, people_by_film)
 
